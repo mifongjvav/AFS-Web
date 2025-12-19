@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="application-name" content="AFS" />
+    <meta name="description" content="  各种函数" />
+    <meta name="author" content="Argon" />
+    <meta name="keywords" content="codemao, Codemao, 编程猫, AFS" />
+    <title>AFS</title>
+    <link rel="icon" href="logo.svg" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/font/font.css" />
+    <link rel="stylesheet" href="css/font-awesome-7.1.0-all.min.css" />
+    <script src="js/marked.min.js"></script>
+    <script src="js/markdown.js"></script>
+    <script src="js/title.js"></script>
+    <style>
+        /* 少量内联样式以保证分类条和精选显示正常（可迁移到 css/style.css） */
+        .section-bar {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin: 12px 0;
+        }
+
+        .category-button {
+            padding: 6px 10px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            background: transparent;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+
+        .category-button.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            margin-right: 6px;
+            margin-top: 6px;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            cursor: pointer;
+        }
+
+        .featured-section {
+            margin-bottom: 16px;
+        }
+
+        .category-group {
+            margin-top: 1.2em;
+            padding-top: 8px;
+            border-top: 1px dashed rgba(0, 0, 0, 0.06);
+        }
+
+        .category-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 导航栏 -->
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="brand">
+                <i class="fas fa-code"></i>
+                <span>AFS</span>
+            </a>
+            <div class="nav-buttons">
+                <div class="nav-search" id="nav-search">
+                    <button class="theme-toggle" id="search-toggle" aria-label="打开搜索">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <div class="search-wrapper" id="search-wrapper" aria-hidden="true">
+                        <input id="nav-search-input" class="nav-search-input" type="search" placeholder="搜索函数名或描述…"
+                            aria-label="搜索函数名或描述" />
+                        <button id="nav-search-clear" class="theme-toggle" aria-label="清除搜索" title="清除">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <button class="nav-button" id="scroll-to-resources">
+                    <i class="fas fa-code"></i>
+                    <span>函数</span>
+                </button>
+                <div class="dropdown">
+                    <button class="nav-button dropdown-toggle">
+                        <i class="fas fa-brush"></i>
+                        <span>主题</span>
+                        <i class="fas fa-chevron-down dropdown-arrow"></i>
+                    </button>
+                    <div class="dropdown-menu">
+                        <div class="theme-mode-container"
+                            style="padding: 12px 20px; border-bottom: 1px solid var(--border-color);">
+                            <div class="theme-mode-option" id="follow-system-theme">
+                                <i class="fas fa-check theme-mode-check"></i>
+                                <span>跟随系统</span>
+                            </div>
+                            <div class="theme-mode-option" id="light-theme">
+                                <i class="fas fa-check theme-mode-check"></i>
+                                <span>浅色模式</span>
+                            </div>
+                            <div class="theme-mode-option" id="dark-theme">
+                                <i class="fas fa-check theme-mode-check"></i>
+                                <span>深色模式</span>
+                            </div>
+                        </div>
+                        <div class="theme-switch-container" style="display: flex; gap: 10px; padding: 12px 20px;">
+                            <div class="theme-option blue active" data-color-theme="blue">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <div class="theme-option modern-black" data-color-theme="modern-black">
+                                <i class="fas fa-check"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="back-to-top-nav" id="back-to-top-nav">
+                    <i class="fas fa-arrow-up"></i>
+                </button>
+            </div>
+    </nav>
+
+    <!-- 主内容区 -->
+    <main class="container">
+        <div class="card">
+            <article id="markdown-content"></article>
+
+            <h2 style="margin-top: 1.8em; margin-bottom: 0.8em; color: var(--primary-color);">
+                <i class="fas fa-star"></i> 精选
+            </h2>
+
+            <!-- 精选区（由 script.js 渲染） -->
+            <div id="featured-container" class="featured-section"></div>
+
+            <h2 id="resources-section" style="margin-top: 1.8em; margin-bottom: 0.8em; color: var(--primary-color);">
+                <i class="fas fa-code"></i> 函数
+            </h2>
+
+            <!-- 分类导航条（由 script.js 生成） -->
+            <div id="category-bar" class="section-bar" aria-label="函数分类"></div>
+
+            <!-- 全部函数容器：内部按分类分组，每个分组有 id 以便滚动 -->
+            <div id="resources-container" class="resources"></div>
+        </div>
+    </main>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <p>AFS Project</p>
+            <div class="contact">
+                <i class="fab fa-qq"></i>
+                <span>找到我：QQ 172013661 或<a href="https://qm.qq.com/q/L2PsISMCeA">加群</a></span>
+            </div>
+            <p style="margin-top: 10px;">由 CloudFlare Pages 提供支持</p>
+            <p style="margin-top: 10px;"> GitHub提供文件存储服务</p>
+            <p style="margin-top: 10px;">Powered by Molita Project</p>
+            <p style="margin-top: 10px;">使用了vivo Sans和Google Sans字体</p>
+        </div>
+    </footer>
+    <script src="js/script.js"></script>
+    <script src="js/Search.js"></script>
+</body>
+
+</html>
