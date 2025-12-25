@@ -4,9 +4,9 @@
 
 # Argon Function Station
 
-![GitHub last commit](https://img.shields.io/github/last-commit/mifongjvav/AFS?display_timestamp=committer) ![GitHub Repo stars](https://img.shields.io/github/stars/mifongjvav/AFS) ![GitHub forks](https://img.shields.io/github/forks/mifongjvav/AFS) ![GitHub commit activity](https://img.shields.io/github/commit-activity/t/mifongjvav/AFS)
+![GitHub last commit](https://img.shields.io/github/last-commit/mifongjvav/AFS?display_timestamp=committer) ![GitHub Repo stars](https://img.shields.io/github/stars/mifongjvav/AFS-Web) ![GitHub forks](https://img.shields.io/github/forks/mifongjvav/AFS-Web) ![GitHub commit activity](https://img.shields.io/github/commit-activity/t/mifongjvav/AFS-Web)
 
-![GitHub Issues or Pull Requests](https://img.shields.io/github/issues/mifongjvav/AFS) ![GitHub Issues or Pull Requests](https://img.shields.io/github/issues-closed/mifongjvav/AFS) ![GitHub Issues or Pull Requests](https://img.shields.io/github/issues-pr/mifongjvav/AFS) ![GitHub Issues or Pull Requests](https://img.shields.io/github/issues-pr-closed/mifongjvav/AFS)
+![GitHub Issues or Pull Requests](https://img.shields.io/github/issues/mifongjvav/AFS-Web) ![GitHub Issues or Pull Requests](https://img.shields.io/github/issues-closed/mifongjvav/AFS-Web) ![GitHub Issues or Pull Requests](https://img.shields.io/github/issues-pr/mifongjvav/AFS-Web) ![GitHub Issues or Pull Requests](https://img.shields.io/github/issues-pr-closed/mifongjvav/AFS-Web)
 
 ---
 
