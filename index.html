@@ -16,63 +16,74 @@
     <script src="js/marked.min.js"></script>
     <script src="js/markdown.js"></script>
     <script src="js/title.js"></script>
-    <style>
-        /* 少量内联样式以保证分类条和精选显示正常（可迁移到 css/style.css） */
-        .section-bar {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-            flex-wrap: wrap;
-            margin: 12px 0;
-        }
+    <script>
+        (function () {
+            function cssVariablesSupported() {
+                return window.CSS && CSS.supports && CSS.supports('--a', '0');
+            }
 
-        .category-button {
-            padding: 6px 10px;
-            border-radius: 6px;
-            border: 1px solid var(--border-color);
-            background: transparent;
-            cursor: pointer;
-            font-size: 0.95rem;
-        }
+            function es2017Supported() {
+                try {
+                    new Function('async function test(){ await Promise.resolve(); }');
+                    return true;
+                } catch (e) {
+                    return false;
+                }
+            }
 
-        .category-button.active {
-            background: var(--primary-color);
-            color: white;
-        }
+            var supported =
+                'fetch' in window &&
+                'Promise' in window &&
+                'classList' in document.documentElement &&
+                cssVariablesSupported() &&
+                es2017Supported();
 
-        .tag {
-            display: inline-block;
-            padding: 2px 8px;
-            border-radius: 999px;
-            font-size: 0.8rem;
-            margin-right: 6px;
-            margin-top: 6px;
-            border: 1px solid rgba(0, 0, 0, 0.06);
-            cursor: pointer;
-        }
+            if (!supported) {
+                document.addEventListener('DOMContentLoaded', function () {
+                    var mask = document.getElementById('browser-unsupported-mask');
+                    if (mask) {
+                        mask.hidden = false;
+                        document.body.style.overflow = 'hidden';
+                    }
+                });
+            }
+        })();
+    </script>
 
-        .featured-section {
-            margin-bottom: 16px;
-        }
-
-        .category-group {
-            margin-top: 1.2em;
-            padding-top: 8px;
-            border-top: 1px dashed rgba(0, 0, 0, 0.06);
-        }
-
-        .category-title {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: var(--primary-color);
-        }
-    </style>
 </head>
 
 <body>
+    <!-- 关闭JavaScript的提示 -->
+    <noscript>
+        <div class="noscript-mask">
+            <div class="noscript-content">
+                <i class="fas fa-triangle-exclamation noscript-icon"></i>
+                <p>
+                    咦？你是不是禁用了 JavaScript？AFS 需要使用 JavaScript 来正常运行哇，<br>
+                    请在 DevTools 中关闭「停用 JavaScript」选项并刷新
+                </p>
+            </div>
+        </div>
+    </noscript>
+
+    <!-- 浏览器不支持提示 -->
+    <div id="browser-unsupported-mask" hidden>
+        <div class="noscript-content">
+            <i class="fas fa-triangle-exclamation noscript-icon"></i>
+            <h3>浏览器版本过低</h3>
+            <p>
+                当前浏览器不支持 AFS 所需的现代 Web 技术。<br>
+                请升级浏览器或使用以下任意一种：
+            </p>
+            <ul style="text-align:left;margin-top:12px;">
+                <li>Chrome 61+</li>
+                <li>Firefox 60+</li>
+                <li>Edge 79+</li>
+                <li>Safari 12+</li>
+            </ul>
+        </div>
+    </div>
+
     <!-- 导航栏 -->
     <nav>
         <div class="nav-container">
