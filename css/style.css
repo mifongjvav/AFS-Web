@@ -2555,3 +2555,364 @@ body {
 #browser-unsupported-mask[hidden] {
     display: none !important;
 }
+
+/* ====== 特殊标签样式 ====== */
+
+/* 特殊标签基础样式 */
+.special-tag {
+    font-weight: 600;
+    border-width: 1.5px;
+    padding: 4px 10px 4px 8px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* 特殊标签图标 */
+.tag-icon {
+    font-size: 0.75rem;
+    opacity: 0.9;
+}
+
+/* 特殊标签悬停效果 */
+.special-tag:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    z-index: 1;
+}
+
+/* 各特殊标签颜色 */
+.special-tag-坟场 {
+    background-color: rgba(136, 136, 136, 0.1);
+    color: #666;
+    border-color: rgba(136, 136, 136, 0.3);
+}
+
+.special-tag-制作中 {
+    background-color: rgba(255, 140, 0, 0.1);
+    color: #cc7000;
+    border-color: rgba(255, 140, 0, 0.3);
+}
+
+.special-tag-待定 {
+    background-color: rgba(255, 215, 0, 0.1);
+    color: #b39700;
+    border-color: rgba(255, 215, 0, 0.3);
+}
+
+.special-tag-过审 {
+    background-color: rgba(59, 130, 246, 0.1);
+    color: #2563eb;
+    border-color: rgba(59, 130, 246, 0.3);
+}
+
+.special-tag-上架 {
+    background-color: rgba(16, 185, 129, 0.1);
+    color: #059669;
+    border-color: rgba(16, 185, 129, 0.3);
+}
+
+.special-tag-用户喜爱 {
+    background-color: rgba(236, 72, 153, 0.1);
+    color: #db2777;
+    border-color: rgba(236, 72, 153, 0.3);
+}
+
+/* 深色模式下的特殊标签 */
+[data-theme="dark"] .special-tag-坟场 {
+    background-color: rgba(136, 136, 136, 0.2);
+    color: #aaa;
+    border-color: rgba(136, 136, 136, 0.4);
+}
+
+[data-theme="dark"] .special-tag-制作中 {
+    background-color: rgba(255, 140, 0, 0.2);
+    color: #ffa500;
+    border-color: rgba(255, 140, 0, 0.4);
+}
+
+[data-theme="dark"] .special-tag-待定 {
+    background-color: rgba(255, 215, 0, 0.2);
+    color: #ffd700;
+    border-color: rgba(255, 215, 0, 0.4);
+}
+
+[data-theme="dark"] .special-tag-过审 {
+    background-color: rgba(59, 130, 246, 0.2);
+    color: #60a5fa;
+    border-color: rgba(59, 130, 246, 0.4);
+}
+
+[data-theme="dark"] .special-tag-上架 {
+    background-color: rgba(16, 185, 129, 0.2);
+    color: #34d399;
+    border-color: rgba(16, 185, 129, 0.4);
+}
+
+[data-theme="dark"] .special-tag-用户喜爱 {
+    background-color: rgba(236, 72, 153, 0.2);
+    color: #f472b6;
+    border-color: rgba(236, 72, 153, 0.4);
+}
+
+/* 现代黑主题下的特殊标签 */
+[data-color-theme="modern-black"] .special-tag-坟场 {
+    background-color: rgba(136, 136, 136, 0.15);
+    border-color: rgba(136, 136, 136, 0.4);
+}
+
+[data-color-theme="modern-black"] .special-tag-制作中 {
+    background-color: rgba(255, 140, 0, 0.15);
+    border-color: rgba(255, 140, 0, 0.4);
+}
+
+[data-color-theme="modern-black"] .special-tag-待定 {
+    background-color: rgba(255, 215, 0, 0.15);
+    border-color: rgba(255, 215, 0, 0.4);
+}
+
+[data-color-theme="modern-black"] .special-tag-过审 {
+    background-color: rgba(59, 130, 246, 0.15);
+    border-color: rgba(59, 130, 246, 0.4);
+}
+
+[data-color-theme="modern-black"] .special-tag-上架 {
+    background-color: rgba(16, 185, 129, 0.15);
+    border-color: rgba(16, 185, 129, 0.4);
+}
+
+[data-color-theme="modern-black"] .special-tag-用户喜爱 {
+    background-color: rgba(236, 72, 153, 0.15);
+    border-color: rgba(236, 72, 153, 0.4);
+}
+
+/* 分类栏中的特殊标签按钮 */
+.special-tag-button {
+    font-weight: 600;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* 特殊标签按钮激活状态样式 */
+.special-tag-button[data-special-tag="坟场"].active {
+    background-color: #888888 !important;
+    color: white !important;
+    border-color: #888888 !important;
+}
+
+.special-tag-button[data-special-tag="制作中"].active {
+    background-color: #FF8C00 !important;
+    color: white !important;
+    border-color: #FF8C00 !important;
+}
+
+.special-tag-button[data-special-tag="待定"].active {
+    background-color: #FFD700 !important;
+    color: #333 !important;
+    border-color: #FFD700 !important;
+}
+
+.special-tag-button[data-special-tag="过审"].active {
+    background-color: #3b82f6 !important;
+    color: white !important;
+    border-color: #3b82f6 !important;
+}
+
+.special-tag-button[data-special-tag="上架"].active {
+    background-color: #10B981 !important;
+    color: white !important;
+    border-color: #10B981 !important;
+}
+
+.special-tag-button[data-special-tag="用户喜爱"].active {
+    background-color: #EC4899 !important;
+    color: white !important;
+    border-color: #EC4899 !important;
+}
+
+/* 特殊标签按钮悬停效果 */
+.special-tag-button:hover {
+    transform: translateY(-1px);
+}
+
+/* 特殊标签按钮图标 */
+.special-tag-button i {
+    font-size: 0.9rem;
+}
+
+/* 卡片上特殊标签的排列顺序 */
+.resource-card .resource-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-bottom: 12px;
+}
+
+/* 确保特殊标签在卡片中显示在前面 */
+.resource-card .special-tag {
+    order: -1;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .special-tag {
+        padding: 3px 8px 3px 6px;
+        font-size: 0.75rem;
+    }
+
+    .special-tag-button {
+        padding: 4px 8px;
+        font-size: 0.85rem;
+    }
+
+    .special-tag-button i {
+        font-size: 0.8rem;
+    }
+}
+
+/* ====== 默认特殊标签设置样式 ====== */
+
+/* 默认标签容器 */
+.default-tag-container {
+    padding: 12px 20px;
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* 默认标签选项 */
+.default-tag-option {
+    position: relative;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.default-tag-option:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.default-tag-option.selected {
+    transform: scale(1.1);
+    box-shadow: 0 0 0 2px var(--primary-color), 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* 默认标签选中标记 */
+.default-tag-check {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+/* 提示动画 */
+@keyframes slideInUp {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
+/* 深色模式适配 */
+[data-theme="dark"] .default-tag-container {
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .default-tag-option {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .default-tag-option:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+/* 现代黑主题适配 */
+[data-color-theme="modern-black"] .default-tag-container {
+    border-color: rgba(51, 51, 51, 0.2);
+}
+
+[data-theme="dark"][data-color-theme="modern-black"] .default-tag-container {
+    border-color: rgba(241, 245, 249, 0.1);
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .default-tag-option {
+        width: 22px;
+        height: 22px;
+    }
+
+    .default-tag-option.selected {
+        transform: scale(1.05);
+    }
+}
+
+/* ====== 默认标签指示器样式 ====== */
+
+/* 默认标签指示器 */
+.default-tag-indicator {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    margin-left: 4px;
+    position: relative;
+    top: -1px;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 0.6;
+        transform: scale(0.8);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.1);
+    }
+
+    100% {
+        opacity: 0.6;
+        transform: scale(0.8);
+    }
+}
+
+/* 分类按钮中的默认标签指示器 */
+.category-button .default-tag-indicator {
+    background: #10B981;
+}
+
+/* 深色模式适配 */
+[data-theme="dark"] .default-tag-indicator {
+    background: #34d399;
+}
+
+/* 现代黑主题适配 */
+[data-color-theme="modern-black"] .default-tag-indicator {
+    background: #0ea5a3;
+}
+
+[data-theme="dark"][data-color-theme="modern-black"] .default-tag-indicator {
+    background: #14b8a6;
+}
