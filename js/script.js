@@ -1,4 +1,4 @@
-// 主题切换功能（保留原有逻辑）
+// 主题切换功能
 const body = document.body;
 const scrollToResourcesBtn = document.getElementById("scroll-to-resources");
 const backToTopNavBtn = document.getElementById("back-to-top-nav");
@@ -23,8 +23,8 @@ const specialTags = {
   '用户喜爱': { color: '#EC4899', order: 5, icon: 'fas fa-heart' }
 };
 
-// 特殊标签排序：上架>过审>用户喜爱>待定>坟场 (制作中作为待定的子状态)
-const specialTagOrder = ['上架', '过审', '用户喜爱', '制作中', '待定', '坟场'];
+// 默认特殊标签
+const DEFAULT_SPECIAL_TAG = '坟场';
 
 // 判断是否为特殊标签
 function isSpecialTag(tag) {
@@ -36,176 +36,19 @@ function getSpecialTagOrder(tag) {
   return specialTags[tag] ? specialTags[tag].order : 999;
 }
 
-// ====== 默认特殊标签设置功能 ======
-let currentDefaultSpecialTag = null;
-
-// 获取默认特殊标签
-function getDefaultSpecialTag() {
-  const saved = localStorage.getItem('defaultSpecialTag');
-  return saved && isSpecialTag(saved) ? saved : '坟场'; // 默认值为"坟场"
-}
-
-// 设置默认特殊标签
-function setDefaultSpecialTag(tag) {
-  if (isSpecialTag(tag)) {
-    localStorage.setItem('defaultSpecialTag', tag);
-    currentDefaultSpecialTag = tag;
-    updateDefaultTagSelectionUI();
-    console.log(`默认特殊标签已设置为: ${tag}`);
-    return true;
-  }
-  return false;
-}
-
-// 更新默认标签选择UI
-function updateDefaultTagSelectionUI() {
-  const buttons = document.querySelectorAll('.default-tag-option');
-  buttons.forEach(btn => {
-    const tag = btn.dataset.tag;
-    const icon = btn.querySelector('.default-tag-check');
-    if (tag === currentDefaultSpecialTag) {
-      btn.classList.add('selected');
-      if (icon) icon.style.display = 'inline-flex';
-    } else {
-      btn.classList.remove('selected');
-      if (icon) icon.style.display = 'none';
-    }
-  });
-}
-
-// 初始化默认特殊标签设置
-function initDefaultTagSettings() {
-  currentDefaultSpecialTag = getDefaultSpecialTag();
-  
-  // 在主题下拉菜单中添加默认标签设置
-  const themeModeContainer = document.querySelector('.theme-mode-container');
-  if (themeModeContainer && themeModeContainer.parentNode) {
-    const defaultTagContainer = document.createElement('div');
-    defaultTagContainer.className = 'default-tag-container';
-    defaultTagContainer.innerHTML = `
-      <div style="margin-top: 8px; font-size: 0.9rem; color: var(--text-color); opacity: 0.8;">
-        <i class="fas fa-tag"></i> 默认特殊标签
-      </div>
-      <div class="default-tag-options" style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px;">
-        ${specialTagOrder.map(tag => `
-          <div class="default-tag-option" data-tag="${tag}" title="${tag}" style="
-            width: 24px; 
-            height: 24px; 
-            border-radius: 12px; 
-            background: ${specialTags[tag].color};
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-          ">
-            <span class="default-tag-check" style="
-              display: none;
-              color: white;
-              font-size: 10px;
-            ">
-              <i class="fas fa-check"></i>
-            </span>
-          </div>
-        `).join('')}
-      </div>
-      <div class="current-default-tag" style="
-        margin-top: 6px; 
-        font-size: 0.8rem; 
-        color: var(--text-color); 
-        opacity: 0.7;
-        display: flex;
-        align-items: center;
-        gap: 4px;
-      ">
-        <i class="fas fa-info-circle"></i>
-        <span>当前默认: <span id="current-default-tag-name">${currentDefaultSpecialTag}</span></span>
-      </div>
-    `;
-    
-    // 插入到主题模式容器后面
-    themeModeContainer.parentNode.insertBefore(defaultTagContainer, themeModeContainer.nextSibling);
-    
-    // 添加点击事件
-    const tagOptions = defaultTagContainer.querySelectorAll('.default-tag-option');
-    tagOptions.forEach(option => {
-      option.addEventListener('click', () => {
-        const tag = option.dataset.tag;
-        if (setDefaultSpecialTag(tag)) {
-          document.getElementById('current-default-tag-name').textContent = tag;
-          
-          // 显示成功提示
-          showTagSetNotification(tag);
-        }
-      });
-    });
-    
-    // 初始化选中状态
-    updateDefaultTagSelectionUI();
-  }
-}
-
-// 显示标签设置成功提示
-function showTagSetNotification(tag) {
-  // 移除现有提示
-  const existing = document.querySelector('.tag-set-notification');
-  if (existing) existing.remove();
-  
-  const notification = document.createElement('div');
-  notification.className = 'tag-set-notification';
-  notification.style.cssText = `
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    border-radius: var(--border-radius);
-    padding: 12px 16px;
-    box-shadow: var(--shadow);
-    z-index: 10000;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    animation: slideInUp 0.3s ease;
-    backdrop-filter: blur(10px);
-  `;
-  
-  const iconStyle = `color: ${specialTags[tag].color}; font-size: 1.2rem;`;
-  notification.innerHTML = `
-    <div style="width: 32px; height: 32px; border-radius: 50%; background: ${specialTags[tag].color}; display: flex; align-items: center; justify-content: center;">
-      <i class="${specialTags[tag].icon}" style="color: white; font-size: 0.9rem;"></i>
-    </div>
-    <div>
-      <div style="font-weight: 600; color: var(--text-color);">默认特殊标签已更新</div>
-      <div style="font-size: 0.9rem; color: var(--text-color); opacity: 0.8;">当前默认: <span style="font-weight: 500;">${tag}</span></div>
-    </div>
-  `;
-  
-  document.body.appendChild(notification);
-  
-  // 3秒后自动消失
-  setTimeout(() => {
-    notification.style.animation = 'fadeOut 0.3s ease forwards';
-    setTimeout(() => {
-      if (notification.parentNode) notification.parentNode.removeChild(notification);
-    }, 300);
-  }, 3000);
-}
-
-// 资源源（保留原配置）
+// 资源源
 const resourceUrls = [
   "https://raw.githubusercontent.com/mifongjvav/AFS/refs/heads/main/AFS.json",
   "https://hub.gitmirror.com/raw.githubusercontent.com/mifongjvav/AFS/refs/heads/main/AFS.json"
 ];
 
-// 备份函数数据（上面JSON的内容）
+// 备份函数数据
 const backupResources = [
   {
     "title": "LRCLite",
     "icon": "fas fa-file",
     "description": "LRCLite，一个简单的歌词引擎",
-    "link": "https://hub.gitmirror.com/raw.githubusercontent.com/mifongjvav/AFS/refs/heads/main/LRCLite.txt",
+    "link": "https://hub.gitmirmirror.com/raw.githubusercontent.com/mifongjvav/AFS/refs/heads/main/LRCLite.txt",
     "linkText": "获取函数",
     "type": "download",
     "class": "工具"
@@ -248,7 +91,7 @@ const backupResources = [
   }
 ];
 
-// ====== 新增：函数精选（硬编码 JSON） ======
+// 函数精选（硬编码 JSON）
 const featuredResources = [
   {
     "title": "星梦KN函数库",
@@ -260,7 +103,8 @@ const featuredResources = [
     "class": [
       "函数库",
       "通用",
-      "算法"
+      "算法",
+      "上架"
     ]
   },
   {
@@ -272,7 +116,8 @@ const featuredResources = [
     "type": "jump",
     "class": [
       "函数库",
-      "综合"
+      "综合",
+      "上架"
     ]
   },
   {
@@ -284,7 +129,8 @@ const featuredResources = [
     "type": "jump",
     "class": [
       "3D",
-      "渲染"
+      "渲染",
+      "上架"
     ]
   },
   {
@@ -296,53 +142,55 @@ const featuredResources = [
     "type": "jump",
     "class": [
       "3D",
-      "引擎"
+      "引擎",
+      "上架"
     ]
-  },
+  }
 ];
 
-// 初始化与状态变量（保留）
+// 初始化与状态变量
 let resourceUpdateInterval = null;
 let lastResourceUpdateTime = null;
 let currentResources = null; // 存储当前函数数据
 
 // ====== 自动添加默认特殊标签功能 ======
 /**
- * 为没有特殊标签的资源自动添加默认特殊标签
+ * 为没有特殊标签的资源自动添加默认特殊标签（坟场）
  * @param {Array} resources 资源数组
  * @returns {Array} 处理后的资源数组
  */
 function addDefaultSpecialTagToResources(resources) {
   if (!resources || !Array.isArray(resources)) return resources;
-  
-  const defaultTag = getDefaultSpecialTag();
-  
+
   return resources.map(resource => {
     // 深拷贝资源，避免修改原始数据
     const processedResource = { ...resource };
-    
+
     // 确保class字段是数组
     let classes = [];
     if (Array.isArray(processedResource.class)) {
       classes = [...processedResource.class];
     } else if (typeof processedResource.class === 'string') {
+      // 分割字符串，支持中文逗号、英文逗号和空格分隔
       classes = processedResource.class.split(/\s*[，,]\s*|\s+/).filter(Boolean);
     }
-    
+
     // 检查是否已经包含任何特殊标签
     const hasSpecialTag = classes.some(cls => isSpecialTag(cls));
-    
-    // 如果没有特殊标签，添加默认特殊标签
+
+    // 如果没有特殊标签，添加默认特殊标签"坟场"
     if (!hasSpecialTag && classes.length > 0) {
-      classes.push(defaultTag);
-      processedResource.class = classes;
+      // 确保默认标签不在列表中（避免重复）
+      if (!classes.includes(DEFAULT_SPECIAL_TAG)) {
+        classes.push(DEFAULT_SPECIAL_TAG);
+        processedResource.class = classes;
+      }
     }
-    
+
     return processedResource;
   });
 }
 
-// 初始化函数卡片
 function initResourceCards() {
   const resourcesContainer = document.getElementById("resources-container");
   const featuredContainer = document.getElementById("featured-container");
@@ -353,19 +201,30 @@ function initResourceCards() {
   }
 
   resourcesContainer.innerHTML = `
-        <div style="text-align: center; padding: 3em; grid-column: 1 / -1;">
-            <i class="fas fa-spinner fa-spin" style="font-size: 2em; color: var(--primary-color);"></i>
-            <p style="margin-top: 1em;">正在加载函数...</p>
-        </div>
-    `;
+    <div style="text-align: center; padding: 3em; grid-column: 1 / -1;">
+      <i class="fas fa-spinner fa-spin" style="font-size: 2em; color: var(--primary-color);"></i>
+      <p style="margin-top: 1em;">正在加载函数...</p>
+    </div>
+  `;
 
   // 先渲染精选（硬编码）
+  // 注意：精选资源已经包含特殊标签，不需要额外处理
   renderFeaturedSection(featuredContainer, featuredResources);
+
+  // 检查是否有可用的资源URL
+  if (!resourceUrls || resourceUrls.length === 0) {
+    console.log("资源URL为空，直接使用备份数据");
+    // 使用备份数据，并添加默认特殊标签
+    const processedBackupResources = addDefaultSpecialTagToResources(backupResources);
+    currentResources = processedBackupResources;
+    renderResourceCards(resourcesContainer, processedBackupResources);
+    return; // 不再尝试自动更新
+  }
 
   // 尝试从多个URL获取函数
   fetchResources()
     .then((resources) => {
-      // 为资源自动添加默认特殊标签
+      // 为所有资源自动添加默认特殊标签（坟场）
       const processedResources = addDefaultSpecialTagToResources(resources);
       currentResources = processedResources; // 保存当前函数
       renderResourceCards(resourcesContainer, processedResources);
@@ -377,11 +236,10 @@ function initResourceCards() {
       const processedBackupResources = addDefaultSpecialTagToResources(backupResources);
       currentResources = processedBackupResources;
       renderResourceCards(resourcesContainer, processedBackupResources);
-      startResourceAutoUpdate(); // 即使失败也尝试自动更新
     });
 }
 
-// 开始/停止/静默更新（保留原逻辑）
+// 开始/停止/静默更新
 function startResourceAutoUpdate() {
   stopResourceAutoUpdate();
   resourceUpdateInterval = setInterval(() => {
@@ -401,9 +259,15 @@ async function silentUpdateResources() {
   const resourcesContainer = document.getElementById("resources-container");
   if (!resourcesContainer) return;
 
+  // 如果resourceUrls为空，则跳过静默更新
+  if (!resourceUrls || resourceUrls.length === 0) {
+    console.log("resourceUrls为空，跳过静默更新");
+    return;
+  }
+
   try {
     const newResources = await fetchResources();
-    // 为资源自动添加默认特殊标签
+    // 为新资源自动添加默认特殊标签
     const processedResources = addDefaultSpecialTagToResources(newResources);
     if (!areResourcesEqual(currentResources, processedResources)) {
       currentResources = processedResources;
@@ -413,6 +277,7 @@ async function silentUpdateResources() {
     }
   } catch (error) {
     // 静默失败
+    console.log("静默更新失败:", error.message);
   }
 }
 
@@ -451,9 +316,16 @@ function showUpdateNotification() {
   }, 3000);
 }
 
-// fetchResources 与 fetchWithTimeout（保留并复用）
+// ====== 获取资源 ======
 async function fetchResources() {
   let lastError;
+  
+  // 如果 resourceUrls 不存在或为空，直接抛出错误
+  if (!resourceUrls || resourceUrls.length === 0) {
+    console.warn("资源URL列表为空，跳过网络请求");
+    throw new Error("资源URL列表为空");
+  }
+  
   const fetchWithTimeoutLocal = (url, timeout = 5000) => {
     return Promise.race([
       fetch(url),
@@ -646,89 +518,6 @@ function renderResourceCards(container, resources) {
   }
 }
 
-/**
- * 渲染混合模式：所有资源混合在一起显示
- */
-function renderMixedResources(container, resources) {
-  const mixedContainer = document.createElement("div");
-  mixedContainer.id = "mixed-resources";
-  mixedContainer.className = "mixed-resources";
-
-  // 直接使用原始资源数据创建卡片，避免重复
-  resources.forEach((resource) => {
-    const card = document.createElement("div");
-    card.className = "resource-card";
-    let iconHTML = "";
-    if (resource.icon) iconHTML = `<i class="${resource.icon}" style="${resource.iconStyle || ""}"></i>`;
-    card.innerHTML = `
-      <h3>${iconHTML} ${resource.title}</h3>
-      <div class="resource-description">${resource.description}</div>
-      <div class="resource-tags">${renderTagsHtml(resource.class)}</div>
-      <a href="javascript:void(0)" onclick="window.getText('${resource.link}', '${resource.type || 'jump'}')">
-        <i class="fas fa-external-link-alt"></i> ${resource.linkText || "立即访问"}
-      </a>
-    `;
-    mixedContainer.appendChild(card);
-  });
-
-  container.appendChild(mixedContainer);
-}
-
-/**
- * 渲染分类模式：按分类分组显示
- */
-function renderCategorizedResources(container, classMap) {
-  // 为每个分类创建一个分组 DOM
-  Object.keys(classMap)
-    .sort((a, b) => a.localeCompare(b))
-    .forEach((cls) => {
-      // 如果是"全部"模式但当前显示模式不是"全部"，跳过渲染
-      if (currentDisplayMode === "__groups__" && (cls === "通用" || cls === "无组别")) {
-        return;
-      }
-
-      // 如果是具体分类模式但当前分类不匹配，跳过渲染
-      if (currentDisplayMode !== "__all__" && currentDisplayMode !== "__groups__" && currentDisplayMode !== cls) {
-        return;
-      }
-
-      const group = document.createElement("div");
-      const slug = `category-${slugify(cls)}`;
-      group.id = slug;
-
-      // 根据是否有组别添加不同的样式类
-      if (cls === "无组别" || cls === "通用") {
-        group.className = "category-group no-groups";
-        group.innerHTML = `<div class="category-title" data-category="${cls}"><i class="fas fa-tag no-group-icon"></i> <span>${cls}</span></div>`;
-      } else {
-        group.className = "category-group has-groups";
-        group.innerHTML = `<div class="category-title" data-category="${cls}"><i class="fas fa-folder-open group-icon"></i> <span>${cls}</span></div>`;
-      }
-
-      const list = document.createElement("div");
-      list.className = "category-list";
-      // 将该分类下的资源渲染为卡片
-      classMap[cls].forEach((resource) => {
-        const card = document.createElement("div");
-        card.className = "resource-card";
-        let iconHTML = "";
-        if (resource.icon) iconHTML = `<i class="${resource.icon}" style="${resource.iconStyle || ""}"></i>`;
-        card.innerHTML = `
-        <h3>${iconHTML} ${resource.title}</h3>
-        <div class="resource-description">${resource.description}</div>
-        <div class="resource-tags">${renderTagsHtml(resource.class)}</div>
-        <a href="javascript:void(0)" onclick="window.getText('${resource.link}', '${resource.type || 'jump'}')">
-          <i class="fas fa-external-link-alt"></i> ${resource.linkText || "立即访问"}
-        </a>
-      `;
-        list.appendChild(card);
-      });
-
-      group.appendChild(list);
-      container.appendChild(group);
-    });
-}
-
 // 渲染标签的 HTML，区分组别标签、无组别标签和特殊标签
 function renderTagsHtml(classField) {
   const classes = Array.isArray(classField)
@@ -782,7 +571,7 @@ function escapeJs(s) {
   return String(s).replace(/'/g, "\\'").replace(/"/g, '\\"');
 }
 
-// ====== 现有帮助函数（复制/下载/打开）保留并兼容 ======
+// ====== 现有帮助函数（复制/下载/打开） ======
 function createAbsoluteUrl(link) {
   try {
     return new URL(link, window.location.href).toString();
@@ -887,7 +676,7 @@ window.getText = async function (link, type) {
   window.open(absUrl, "_blank");
 };
 
-// 主题与 UI 初始化（保留原逻辑）
+// 主题与 UI 初始化
 let systemThemeMediaQuery = null;
 function initTheme() {
   const savedThemeMode = localStorage.getItem("themeMode") || "follow-system";
@@ -983,7 +772,7 @@ function scrollToResources() {
   });
 }
 
-// 事件监听器（保留原有绑定）
+// 事件监听器
 followSystemOption.addEventListener("click", () => setThemeMode("follow-system"));
 lightThemeOption.addEventListener("click", () => setThemeMode("light"));
 darkThemeOption.addEventListener("click", () => setThemeMode("dark"));
@@ -1000,7 +789,6 @@ colorThemeButtons.forEach((btn) => {
 // 在init函数中初始化（把资源初始化放在这里）
 function init() {
   initTheme();
-  initDefaultTagSettings();
   initResourceCards();
 
   // 移除与wiki相关的内容加载
@@ -1028,16 +816,18 @@ function init() {
 
 console.warn("[信息]", "我趣！有啥阔？！？");
 console.log("[信息]", "我就知道你打开这个是有点什么小想法。");
+console.log("[AFS] 默认特殊标签:", DEFAULT_SPECIAL_TAG);
+console.log("[AFS] 可用特殊标签:", Object.keys(specialTags).join(', '));
+console.log("[AFS] 提示: 使用 reapplyDefaultTags() 重新应用默认标签");
+console.log("[AFS] 提示: 使用 setDefaultTag('标签名') 更改默认标签");
+console.log("[AFS] 提示: 使用 getDefaultTag() 查看当前默认标签");
 
 function manualUpdateResources() {
   silentUpdateResources();
 }
 window.manualUpdateResources = manualUpdateResources;
-console.log("测试命令: manualUpdateResources()");
 
-init();
-
-/* ====== 新实现：按分类筛选显示（替换旧的分类/滚动实现） ====== */
+/* ====== 新实现：按分类筛选显示 ====== */
 
 /* 生成安全的 slug（避免 id 冲突） */
 function safeSlugify(text) {
@@ -1049,7 +839,7 @@ function safeSlugify(text) {
   return (base || "cat") + "-" + shortHash;
 }
 
-/* 保持兼容：slugify 现指向 safeSlugify（确保渲染分组与查找一致） */
+/* 保持兼容：slugify 现指向 safeSlugify */
 function slugify(text) {
   return safeSlugify(text);
 }
@@ -1155,20 +945,14 @@ function renderCategoryBar(classList) {
     specialBtn.className = "category-button special-tag-button";
     specialBtn.dataset.cat = tagName;
     specialBtn.dataset.specialTag = tagName;
-    
-    // 检查是否为默认标签
-    const isDefaultTag = tagName === getDefaultSpecialTag();
-    
+
     // 添加图标
-    const iconHTML = specialTags[tagName]?.icon 
-      ? `<i class="${specialTags[tagName].icon}"></i> ` 
+    const iconHTML = specialTags[tagName]?.icon
+      ? `<i class="${specialTags[tagName].icon}"></i> `
       : '';
-    
-    // 如果是默认标签，添加特殊标识
-    const defaultIndicator = isDefaultTag ? '<span class="default-tag-indicator" title="默认标签"></span>' : '';
-    
-    specialBtn.innerHTML = `${iconHTML}${tagName} ${defaultIndicator}`;
-    
+
+    specialBtn.innerHTML = `${iconHTML}${tagName}`;
+
     specialBtn.addEventListener('click', () => {
       filterByCategory(tagName);
     });
@@ -1195,54 +979,84 @@ function renderCategoryBar(classList) {
   bar.style.webkitOverflowScrolling = 'touch';
 }
 
-/* 由卡片上的 tag 调用：直接筛选 */
-window.filterByCategoryFromTag = function (event, cls) {
-  try {
-    if (event && event.stopPropagation) event.stopPropagation();
-  } catch (e) { }
-
-  // 直接筛选，不切换回全部
-  filterByCategory(cls);
-};
-
-/**
- * 显示某个分类组（只显示目标组，隐藏其它组）。
- * 如果 cls 为 "__all__" 则显示所有组。
- * 如果 cls 为 "__groups__" 则显示所有有组别的分类。
- */
-
-/* 兼容旧代码：确保 renderResourceCards 在渲染分组时使用相同 slug 规则。
-   如果你已经有 renderResourceCards，请确认它为每个分类组设置 id = 'category-' + slugify(cls)
-   （上面实现依赖于此）。如果不是，请把渲染分组的 id 调整为相同规则。 */
-
 // ====== 添加全局函数，允许从控制台或外部设置默认标签 ======
-window.setDefaultTag = function(tagName) {
-  if (isSpecialTag(tagName)) {
-    setDefaultSpecialTag(tagName);
-    document.getElementById('current-default-tag-name').textContent = tagName;
-    showTagSetNotification(tagName);
-    return `默认特殊标签已设置为: ${tagName}`;
-  } else {
-    return `"${tagName}" 不是有效的特殊标签。有效标签: ${Object.keys(specialTags).join(', ')}`;
-  }
-};
-
-// 添加一个全局函数，获取当前默认标签
-window.getDefaultTag = function() {
-  return getDefaultSpecialTag();
-};
-
-// 添加一个全局函数，手动触发为所有资源重新添加默认标签
-window.reapplyDefaultTags = function() {
+/**
+ * 手动为所有资源重新应用默认标签（坟场）
+ * 可以通过控制台调用：reapplyDefaultTags()
+ */
+window.reapplyDefaultTags = function () {
   if (currentResources) {
     const processedResources = addDefaultSpecialTagToResources(currentResources);
     currentResources = processedResources;
     const resourcesContainer = document.getElementById("resources-container");
     if (resourcesContainer) {
       renderResourceCards(resourcesContainer, processedResources);
-      console.log("已重新为所有资源应用默认标签");
+      console.log(`已重新为所有资源应用默认标签"${DEFAULT_SPECIAL_TAG}"`);
+      return `已为 ${processedResources.length} 个资源添加"${DEFAULT_SPECIAL_TAG}"标签`;
     }
   } else {
     console.log("当前没有可用的资源数据");
+    return "当前没有可用的资源数据";
   }
 };
+
+/**
+ * 查看当前使用的默认特殊标签
+ */
+window.getDefaultTag = function () {
+  return DEFAULT_SPECIAL_TAG;
+};
+
+/**
+ * 更改默认特殊标签
+ * @param {string} tagName 新的默认标签名称（必须在specialTags中定义）
+ */
+window.setDefaultTag = function (tagName) {
+  if (isSpecialTag(tagName)) {
+    // 更新全局默认标签变量
+    const oldTag = DEFAULT_SPECIAL_TAG;
+    DEFAULT_SPECIAL_TAG = tagName;
+    
+    // 重新为所有资源应用新标签
+    if (currentResources) {
+      // 首先移除旧的默认标签（如果存在）
+      const resourcesWithoutOldTag = currentResources.map(resource => {
+        const processedResource = { ...resource };
+        let classes = [];
+        
+        if (Array.isArray(processedResource.class)) {
+          classes = [...processedResource.class];
+        } else if (typeof processedResource.class === 'string') {
+          classes = processedResource.class.split(/\s*[，,]\s*|\s+/).filter(Boolean);
+        }
+        
+        // 移除旧的默认标签
+        const index = classes.indexOf(oldTag);
+        if (index > -1) {
+          classes.splice(index, 1);
+        }
+        
+        processedResource.class = classes;
+        return processedResource;
+      });
+      
+      // 然后应用新的默认标签
+      const newResources = addDefaultSpecialTagToResources(resourcesWithoutOldTag);
+      currentResources = newResources;
+      
+      // 重新渲染
+      const resourcesContainer = document.getElementById("resources-container");
+      if (resourcesContainer) {
+        renderResourceCards(resourcesContainer, newResources);
+        console.log(`默认标签已从"${oldTag}"更改为"${tagName}"`);
+      }
+    }
+    
+    return `默认标签已更改为: ${tagName}`;
+  } else {
+    return `"${tagName}" 不是有效的特殊标签。有效标签: ${Object.keys(specialTags).join(', ')}`;
+  }
+};
+
+// 初始化
+init();
