@@ -10,9 +10,9 @@
 
 [<i class="fas fa-code-branch"></i>Fork AFS的Github仓库以准备提交拉取请求](https://github.com/mifongjvav/AFS/fork)
 
-## 想要提交自己的函数？拉取请求？滚蛋！QQ？屎！
+###  想要提交自己的函数？拉取请求？滚蛋！QQ？屎！
 
-[<i class="fa-brands fa-github"></i>AFS的Github Issues页面](https://github.com/mifongjvav/AFS/issues)
+### [<i class="fa-brands fa-github"></i>AFS的Github Issues页面 使用函数提交模板来提交函数](https://github.com/mifongjvav/AFS/issues)
 
 想要参与网站开发？[<i class="fa-brands fa-github"></i>AFS-Web的Github仓库](https://github.com/mifongjvav/AFS-Web/)
 
