@@ -284,6 +284,7 @@ nav {
 }
 
 .brand {
+    border-radius: 5px;
     font-weight: 700;
     font-size: 1.5rem;
     color: var(--primary-color);
@@ -1163,8 +1164,10 @@ body {
 /* 分类组显示时的状态 */
 .category-group:not([style*="display: none"]) {
     animation: fadeInUp 0.4s ease-out forwards;
-    max-height: 2000px;
-    /* 足够大的值容纳内容 */
+    /* 取消固定 max-height（动画时可能会被使用，但显示完成后要允许自然高度） */
+    max-height: none !important;
+    /* 允许元素向下撑开页面（不会重叠页脚） */
+    overflow: visible !important;
     opacity: 1;
     transform: scaleY(1) translateY(0);
 }

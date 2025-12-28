@@ -24,7 +24,7 @@ const specialTags = {
 };
 
 // 默认特殊标签
-const DEFAULT_SPECIAL_TAG = '坟场';
+const DEFAULT_SPECIAL_TAG = '制作中';
 
 // 判断是否为特殊标签
 function isSpecialTag(tag) {
@@ -360,14 +360,14 @@ function renderFeaturedSection(container, featuredList) {
   const wrapper = container.firstElementChild;
   featuredList.forEach((res) => {
     const card = document.createElement("div");
-    card.className = "resource-card";
+    card.className = "resource-card mdui-ripple";
     let iconHTML = "";
     if (res.icon) iconHTML = `<i class="${res.icon}"></i>`;
     card.innerHTML = `
       <h3>${iconHTML} ${res.title}</h3>
       <div class="resource-description">${res.description}</div>
       <div class="resource-tags">${renderTagsHtml(res.class)}</div>
-      <a href="javascript:void(0)" onclick="window.getText('${res.link}', '${res.type || 'jump'}')">
+      <a class="mdui-ripple" href="javascript:void(0)" onclick="window.getText('${res.link}', '${res.type || 'jump'}')">
         <i class="fas fa-external-link-alt"></i> ${res.linkText || "立即访问"}
       </a>
     `;
@@ -453,14 +453,14 @@ function renderResourceCards(container, resources) {
 
     resources.forEach((resource) => {
       const card = document.createElement("div");
-      card.className = "resource-card";
+      card.className = "resource-card mdui-ripple";
       const iconHTML = resource.icon ? `<i class="${resource.icon}" style="${resource.iconStyle || ""}"></i>` : "";
       const onclick = makeOnclickForResource(resource);
       card.innerHTML = `
         <h3>${iconHTML} ${resource.title || "未命名"}</h3>
         <div class="resource-description">${resource.description || ""}</div>
         <div class="resource-tags">${renderTagsHtml(resource.class)}</div>
-        <a href="javascript:void(0)" onclick="${onclick}">
+        <a class="mdui-ripple" href="javascript:void(0)" onclick="${onclick}">
           <i class="fas fa-external-link-alt"></i> ${resource.linkText || "立即访问"}
         </a>
       `;
@@ -492,14 +492,14 @@ function renderResourceCards(container, resources) {
 
         classMap[cls].forEach((resource) => {
           const card = document.createElement("div");
-          card.className = "resource-card";
+          card.className = "resource-card mdui-ripple";
           const iconHTML = resource.icon ? `<i class="${resource.icon}" style="${resource.iconStyle || ""}"></i>` : "";
           const onclick = makeOnclickForResource(resource);
           card.innerHTML = `
             <h3>${iconHTML} ${resource.title || "未命名"}</h3>
             <div class="resource-description">${resource.description || ""}</div>
             <div class="resource-tags">${renderTagsHtml(resource.class)}</div>
-            <a href="javascript:void(0)" onclick="${onclick}">
+            <a class="mdui-ripple" href="javascript:void(0)" onclick="${onclick}">
               <i class="fas fa-external-link-alt"></i> ${resource.linkText || "立即访问"}
             </a>
           `;
