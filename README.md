@@ -22,9 +22,19 @@
 
 |AFS总站|AFS镜像站|
 |--|--|
-|<https://afs-web.pages.dev/>|<https://mifongjvav.dpdns.org//>|
+|<https://afs-web.pages.dev/>|<https://afsweb.qzz.io/>|
 
 ## 提交函数
+
+### 通过GitHub Issue
+
+打开[AFS的issue](https://github.com/mifongjvav/AFS/issues/)
+
+点击New issue
+
+选择`提交请求`模板
+
+输入信息，创建。
 
 ### 通过作者
 
