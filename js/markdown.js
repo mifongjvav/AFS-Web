@@ -6,6 +6,8 @@
 
 持续收录更多函数中...
 
+访问巨慢？试试<a href="https://afsweb.qzz.io" target="_blank">https://afsweb.qzz.io</a>你可直接把它拖入书签栏
+
 链接：
 
 [<i class="fa-brands fa-github"></i>AFS的Github仓库 <i class="fas fa-star"></i>点个Star吧](https://github.com/mifongjvav/AFS/)
