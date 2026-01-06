@@ -18,6 +18,6 @@
 
 想要参与网站开发？[<i class="fa-brands fa-github"></i>AFS-Web的Github仓库](https://github.com/mifongjvav/AFS-Web/)
 
-> **提示**：切换主题请将鼠标放在 **<i class="fas fa-brush"></i>** 按钮上
+> **提示**：切换主题请将鼠标放在 **<i class="fas fa-brush"></i>** 按钮上，我们使用localstorage来存储您的主题信息
 
         `;
