@@ -6,7 +6,7 @@
 
 持续收录更多函数中...
 
-访问巨慢？试试<a href="https://afsweb.qzz.io" target="_blank">https://afsweb.qzz.io</a>你可直接把它拖入书签栏
+访问巨慢？试试<a href="https://afsweb.qzz.io" class="resource-card">https://afsweb.qzz.io</a>你可直接把它拖入书签栏
 
 链接：
 
