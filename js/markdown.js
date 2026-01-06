@@ -2,15 +2,13 @@
         const markdownContent = `
 # Welcome Back
 
-一个普普通通的站点，提供各种函数/库供你使用
+一个普普通通的站点，提供各种函数/库供你使用（传说是因为dev懒得写代码而创建的站点）
 
 持续收录更多函数中...
 
 链接：
 
 [<i class="fa-brands fa-github"></i>AFS的Github仓库 <i class="fas fa-star"></i>点个Star吧](https://github.com/mifongjvav/AFS/)
-
-[<i class="fas fa-code-branch"></i>Fork AFS的Github仓库以准备提交拉取请求](https://github.com/mifongjvav/AFS/fork)
 
 ###  想要提交自己的函数？
 
