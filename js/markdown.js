@@ -1,6 +1,8 @@
 // Markdown内容 - 使用原版格式
         const markdownContent = `
-# This is Argon Function Station V2.
+# Welcome Back
+
+一个普普通通的站点，提供各种函数/库供你使用
 
 持续收录更多函数中...
 
@@ -10,7 +12,7 @@
 
 [<i class="fas fa-code-branch"></i>Fork AFS的Github仓库以准备提交拉取请求](https://github.com/mifongjvav/AFS/fork)
 
-###  想要提交自己的函数？拉取请求？滚蛋！QQ？屎！
+###  想要提交自己的函数？
 
 ### [<i class="fa-brands fa-github"></i>AFS的Github Issues页面 使用函数提交模板来提交函数](https://github.com/mifongjvav/AFS/issues/new/choose)
 
