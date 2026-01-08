@@ -91,63 +91,6 @@ const backupResources = [
   }
 ];
 
-// 函数精选（硬编码 JSON）
-const featuredResources = [
-  {
-    "title": "星梦KN函数库",
-    "icon": "fas fa-file-zipper",
-    "description": " <p>原作者：旁观者JErS</p><p>包含列表排序、数据统计、几何计算、RSA加/解密、文本工具、颜色转换等76个实用函数。</p><p>部分函数来自其他函数库，在此对原作者进行感谢。</p>",
-    "link": "https://kn.codemao.cn/view/?workId=233953447",
-    "linkText": "获取函数",
-    "type": "jump",
-    "class": [
-      "函数库",
-      "通用",
-      "算法",
-      "上架"
-    ]
-  },
-  {
-    "title": "方圆圆函数库合集",
-    "icon": "fas fa-cube",
-    "description": " <p>原作者：方圆圆</p><p>就是合集而已，函数以后这里更新哦</p>",
-    "link": "https://kn.codemao.cn/view/?workId=289701127",
-    "linkText": "获取作品",
-    "type": "jump",
-    "class": [
-      "函数库",
-      "综合",
-      "上架"
-    ]
-  },
-  {
-    "title": "KittenN  3D Triangle",
-    "icon": "fas fa-cube",
-    "description": " <p>原作者：imaginary number</p><p>KittenN也要渲染3D三角形</p>",
-    "link": "https://kn.codemao.cn/view/?workId=252508272",
-    "linkText": "获取作品",
-    "type": "jump",
-    "class": [
-      "3D",
-      "渲染",
-      "上架"
-    ]
-  },
-  {
-    "title": "VertezForge Engine 4",
-    "icon": "fas fa-cube",
-    "description": " <p>原作者：imaginary number</p><p>这是一个里程碑....</p><p>它代表着猫站矢量3D的最高境界......</p><p>同时也代表着矢量3D的开发已经成熟了......</p><p>没有人，能达到它的水平.......</p><a href='https://shequ.codemao.cn/community/1637503' target='_blank'>🤔使用教程</a><p>此为Kitten 3作品</p>",
-    "link": "https://shequ.codemao.cn/work/278330115",
-    "linkText": "获取作品",
-    "type": "jump",
-    "class": [
-      "3D",
-      "引擎",
-      "上架"
-    ]
-  }
-];
-
 // 初始化与状态变量
 let resourceUpdateInterval = null;
 let lastResourceUpdateTime = null;
@@ -193,7 +136,6 @@ function addDefaultSpecialTagToResources(resources) {
 
 function initResourceCards() {
   const resourcesContainer = document.getElementById("resources-container");
-  const featuredContainer = document.getElementById("featured-container");
 
   if (!resourcesContainer) {
     console.error("找不到函数卡片容器");
@@ -206,10 +148,6 @@ function initResourceCards() {
       <p style="margin-top: 1em;">正在加载函数...</p>
     </div>
   `;
-
-  // 先渲染精选（硬编码）
-  // 注意：精选资源已经包含特殊标签，不需要额外处理
-  renderFeaturedSection(featuredContainer, featuredResources);
 
   // 检查是否有可用的资源URL
   if (!resourceUrls || resourceUrls.length === 0) {
@@ -347,32 +285,6 @@ async function fetchResources() {
     }
   }
   throw lastError || new Error("所有函数URL都失败了");
-}
-
-// ====== 渲染精选 ======
-function renderFeaturedSection(container, featuredList) {
-  if (!container) return;
-  if (!featuredList || featuredList.length === 0) {
-    container.innerHTML = "";
-    return;
-  }
-  container.innerHTML = `<div style="display:flex;gap:12px;flex-wrap:wrap;"></div>`;
-  const wrapper = container.firstElementChild;
-  featuredList.forEach((res) => {
-    const card = document.createElement("div");
-    card.className = "resource-card mdui-ripple";
-    let iconHTML = "";
-    if (res.icon) iconHTML = `<i class="${res.icon}"></i>`;
-    card.innerHTML = `
-      <h3>${iconHTML} ${res.title}</h3>
-      <div class="resource-description">${res.description}</div>
-      <div class="resource-tags">${renderTagsHtml(res.class)}</div>
-      <a class="mdui-ripple" href="javascript:void(0)" onclick="window.getText('${res.link}', '${res.type || 'jump'}')">
-        <i class="fas fa-external-link-alt"></i> ${res.linkText || "立即访问"}
-      </a>
-    `;
-    wrapper.appendChild(card);
-  });
 }
 
 /**
