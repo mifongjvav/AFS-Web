@@ -39,7 +39,7 @@ function getSpecialTagOrder(tag) {
 // 资源源
 const resourceUrls = [
   "https://raw.githubusercontent.com/mifongjvav/AFS/refs/heads/main/AFS.json",
-  "https://hub.gitmirror.com/raw.githubusercontent.com/mifongjvav/AFS/refs/heads/main/AFS.json"
+  "https://down.npee.cn/?https://raw.githubusercontent.com/mifongjvav/AFS/refs/heads/main/AFS.json"
 ];
 
 // 备份函数数据
