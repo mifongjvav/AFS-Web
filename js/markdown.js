@@ -8,7 +8,7 @@
 
 我们真的很缺其它编程语言写的函数/库，如果你会其它的编程语言，欢迎提交你的函数/库！
 
-访问巨慢？试试<a href="https://afsweb.qzz.io" class="resource-card">AFS</a>你可直接把它拖入书签栏
+访问巨慢？试试<a href="https://afsweb.qzz.io" class="resource-card mdui-ripple">AFS</a>你可直接把它拖入书签栏
 
 链接：
 
